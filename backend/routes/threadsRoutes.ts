@@ -1,11 +1,11 @@
 import express from 'express'
 import { requireAuth } from '../middleware/requireAuth'
-import { getAllThreads, getUserThreads } from '../controllers/threadsControllers';
+import { getThreads, getUserThreads } from '../controllers/threadsControllers';
 
 
 const router = express.Router();
 
-router.get('/getAllThreads', getAllThreads);
+router.get('/getThreads', getThreads);
 router.get('/getUserThreads',requireAuth,getUserThreads);
 
 export default router;

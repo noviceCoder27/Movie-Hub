@@ -1,14 +1,16 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose';
-import cors from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes'
 import threadsRoutes from './routes/threadsRoutes'
-dotenv.config();
+dotenv.config();        
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173"
+}));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/user',userRoutes);

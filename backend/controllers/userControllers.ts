@@ -71,7 +71,7 @@ export const getUserInfo = async(req: Request,res: Response) => {
 }
 
 export const addThread = async (req: Request,res: Response) => {
-    const {title,description} = req.body;
+    const {title,description,movie_id} = req.body;
     const _id = getUserID(req);
     const threadExists = await Threads.findOne({title,description});
     const creatorExists: IUser| null = await User.findOne({_id}); 
@@ -82,7 +82,7 @@ export const addThread = async (req: Request,res: Response) => {
     } else if(title && description && _id) {
         const discussion_box = {answers: []};
         try {
-            const thread = await Threads.create({title,description,creator_id: _id,discussion_box});
+            const thread = await Threads.create({title,description,creator_id: _id,movie_id,discussion_box});
             const {threads} = creatorExists
             if(threads) {
                 await User.findByIdAndUpdate(_id,{threads: [...threads,thread._id]},{new: true});

@@ -1,5 +1,6 @@
 import {useParams} from 'react-router-dom'
-import { useMovieInfo } from '../hooks/useMovieInfo'
+import { useMovieInfo } from '../utils/hooks/useMovieInfo'
+import Threads from '../components/Threads/Threads';
 
 
 interface Genre {
@@ -41,9 +42,9 @@ const Movie = () => {
     ));
 
     const genres = movie?.genres.map(genre => (
-        <>
+        <div key = {(genre as Genre).id}>
             {(genre as Genre).name}
-        </>
+        </div>
     ))
         
     return (
@@ -52,15 +53,18 @@ const Movie = () => {
                 <img src= {`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt="Movie Image" height={'500px'} width={'500px'}/>
             </div>
             <h1>{movie?.original_title}</h1>
-            <div>
+            <>
                 {genres}
-            </div>
+            </>
             <p>{movie?.overview}</p>
             <div>
                 {displayCastMembers}
             </div>
             <div>
                 {displayVideos}
+            </div>
+            <div>
+                <Threads />
             </div>
         </div>
     )

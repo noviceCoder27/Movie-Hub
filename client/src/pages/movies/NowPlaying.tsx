@@ -1,4 +1,4 @@
-import { useMovies } from "../../hooks/useMovies";
+import { useMovies } from "../../utils/hooks/useMovies";
 import { Link } from "react-router-dom";
 
 const NowPlaying = () => {

@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 
-export interface Movie {
+interface Movie {
     adult: false,
     backdrop_path: string,
     genre_ids: Array<number> | number,

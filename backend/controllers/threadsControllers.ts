@@ -7,12 +7,17 @@ import { getUserID } from './userControllers';
 
 
 
-export const getAllThreads = async (req:Request,res:Response) => {
-    try {
-        const threads = await Threads.find({});
-        res.status(201).json(threads);
-    } catch(err) {
-        res.status(400).json({msg: "Error getting threads"});
+export const getThreads = async (req:Request,res:Response) => {
+    const {movie_id} = req.headers;
+    if(movie_id) {
+        try {
+            const threads = await Threads.find({movie_id});
+            res.status(201).json(threads);
+        } catch(err) {
+            res.status(400).json({msg: "Error getting threads"});
+        }
+    } else {
+        res.status(400).json({msg: "Enter valid movie"});
     }
 }
 
