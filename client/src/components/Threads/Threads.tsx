@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom"
 import CreateThread from "./CreateThread";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import { Box } from "@chakra-ui/react";
 
 
 const Threads = () => {
   const {movieId} = useParams();
   const [thread,setThread] = useState({title:"", description: "", movie_id: movieId});
+  const [createThread,setCreateThread] = useState(false);
 
   const fetchThreads = async () => {
     const options = {
@@ -41,10 +43,10 @@ const Threads = () => {
   ))
   
   return (
-    <div>
+    <Box bg= 'black' minH={'100vh'} color ='white'>
         <CreateThread thread = {thread} setThread = {setThread}/>
         {displayThreads}
-    </div>
+    </Box>
   )
 }
 

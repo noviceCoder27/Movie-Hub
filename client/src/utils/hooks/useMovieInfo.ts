@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 
 
-interface IMovie {   
+export interface IMovie {   
     adult: boolean
     backdrop_path: string
     belongs_to_collection: object
@@ -29,9 +29,10 @@ interface IMovie {
     video: boolean
     vote_average: number
     vote_count: number
+    poster_path: string
 }
 
-interface ICast {
+export interface ICast {
     adult: boolean
     cast_id: number
     character: string
@@ -46,7 +47,7 @@ interface ICast {
     profile_path: string
 }
 
-interface IVideos {
+export interface IVideos {
     id: string
     iso_639_1: string
     iso_3166_1: string
@@ -81,7 +82,7 @@ export const useMovieInfo = (movieId: string | undefined) => {
             throw new Error((err as Error).message);
         } 
     }
-    const {data,isLoading,isError,error} = useQuery<[IMovie,Array<ICast>,Array<IVideos>],Error>('movie',fetchMovieInfo);
+    const {data,isLoading,isError,error} = useQuery<[IMovie,Array<ICast>,Array<IVideos>],Error>(['movie',movieId],fetchMovieInfo);
     return {data,isLoading,isError,error};
 }
 

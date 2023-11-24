@@ -16,10 +16,11 @@ interface Movie {
     title: string,
     video: boolean
     vote_average: number,
-    vote_count: number
+    vote_count: number,
+    total_pages: number
 }
 
-export const useMovies = (section: string) => {
+export const useMovies = (section: string,pageNum:number) => {
     const options = {
         headers: {
             accept: 'application/json',
@@ -28,14 +29,14 @@ export const useMovies = (section: string) => {
     }
     const fetchMovies = async () => {
         try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/${section}?language=en-US&page=1`,options);
-            return response.data.results;
+            const response = await axios.get(`https://api.themoviedb.org/3/movie/${section}?language=en-US&page=${pageNum}`,options);
+            const data = [...response.data.results,response.data.total_pages];
+            return data;
         } catch(err) {
             throw new Error((err as Error).message)
-        }
-        
+        } 
     }
-    const {data,error,isLoading,isError} = useQuery<Movie[], Error>(['movies',section],fetchMovies);
+    const {data,error,isLoading,isError} = useQuery<Movie[], Error>(['movies',section,pageNum],fetchMovies);
     return {data,error,isLoading,isError};
 }
 

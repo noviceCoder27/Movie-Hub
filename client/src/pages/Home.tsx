@@ -1,13 +1,15 @@
-import Movie from './movies/Movies'
+import Navbar from '../components/Navbar'
+import { Flex, Image } from '@chakra-ui/react'
+import Background from '../assets/background2.png'
 
 
 const Home = () => {
 
     return (
-        <div>
-            <h1>Navbar</h1>
-            <Movie />
-        </div>
+        <Flex h="100vh" direction= "column">
+            <Navbar />
+            <Image src = {Background} w = "100%" h = "100%" position="absolute" zIndex= "-1"/>
+        </Flex>
     )
 }
 
