@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react"
 import { IMovie,ICast } from "../../utils/hooks/useMovieInfo"
 import { FaRegUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 interface Genre {
@@ -11,11 +12,10 @@ interface Genre {
 interface Props {
     movie: IMovie | undefined,
     cast: ICast[] | undefined,
-    setOpenThreads: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Details = ({movie,cast,setOpenThreads}: Props) => {
-    
+const Details = ({movie,cast}: Props) => {
+
     const displayCastMembers = cast?.map(actor => (
         <Flex direction = {'column'} flexWrap = {'wrap'}alignItems = {'center'} key = {actor.id} gap={'0.5rem'}>
             <Flex flexWrap={'wrap'} >
@@ -51,7 +51,10 @@ const Details = ({movie,cast,setOpenThreads}: Props) => {
                     {displayCastMembers}
                 </Flex>
                 <Text mt = {'2rem'} mb = {'0.1rem'}>Join the discussions for this movie</Text>
-                <Button width={'fit-content'} bg = 'transparent' color = 'white' border = '2px solid white' _hover = {{color: "black", background: "white"}} onClick={() => setOpenThreads(true)}>View Threads</Button>
+                <Button width={'fit-content'} bg = 'transparent' color = 'white' border = '2px solid white' _hover = {{color: "black", background: "white"}}>
+                    <Link to = 'threads'>View Threads</Link>
+                    
+                </Button>
             </Flex>
         </Flex>
     )

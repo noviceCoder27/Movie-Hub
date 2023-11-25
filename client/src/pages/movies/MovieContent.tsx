@@ -5,11 +5,8 @@ import Videos from '../../components/movie/Videos';
 import Details from '../../components/movie/Details';
 import Similar from '../../components/movie/Similar';
 
-interface Props {
-    setOpenThreads: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-const MovieContent = ({setOpenThreads}: Props) => {
+const MovieContent = () => {
     const {movieId} = useParams();
     let movie,cast,videos;
     const {data,isLoading,isError,error} = useMovieInfo(movieId);
@@ -31,7 +28,7 @@ const MovieContent = ({setOpenThreads}: Props) => {
     return (
         <Box pt = {{xl: "12rem"}} color = {'white'} p = {'3rem'}>
             <Image opacity = {'30%'} left = {'0'} top = {'0'}pos = {'absolute'} src = {`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} h = {'25%'} w = {'100%'}/>
-            <Details movie = {movie} cast = {cast} setOpenThreads = {setOpenThreads}/>
+            <Details movie = {movie} cast = {cast}/>
             <Flex direction={'column'} gap = {'2rem'} mt ={'4rem'}>
                 <Heading>Promos & Trailers</Heading>
                 {videos && videos.length ? 
