@@ -29,10 +29,12 @@ export const getUserThreads = async (req:Request,res:Response) => {
             if(user) {
                 const {threads: threadIDs} = user;
                 if(threadIDs) {
+                    const threads = [];
                     for(const threadID of threadIDs) {
-                        const threads = await Threads.find({_id: threadID});
-                        res.status(201).json(threads);
-                    } 
+                        const thread = await Threads.findOne({_id: threadID});
+                        threads.push(thread);
+                    }
+                    res.status(201).json(threads);  
                 } else {
                     res.status(201).json({msg: []});
                 }

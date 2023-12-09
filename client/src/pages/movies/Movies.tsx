@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Image, Skeleton, SkeletonText, Text } from "@chakra-ui/react";
-import { useMovies } from "../../utils/hooks/useMovies";
+import { useMovies } from "../../utils/hooks/movies/useMovies";
 import { Link } from "react-router-dom";
 import Background from '../../assets/background1.jpeg'
 import Pagination from "../../components/Pagination";
@@ -52,7 +52,7 @@ const Movies = ({category}: Props) => {
     
     return (
         <Flex direction = {"column"} backgroundImage={Background} backgroundRepeat={"no-repeat"} backgroundSize={"cover"}>
-            <Heading mt = {{md: "6rem"}} color = {"white"} pl = {"2rem"} pt = {"2rem"} textShadow={"0px 7px 0px black"}>{category?.toUpperCase() + "..."}</Heading>
+            <Heading mt = {{lg: "6rem"}} color = {"white"} pl = {"2rem"} pt = {"2rem"} textShadow={"0px 7px 0px black"}>{category?.toUpperCase() + "..."}</Heading>
             <Flex flexWrap={"wrap"} gap = {"2rem"} p = {"2rem"} justifyContent={{base: "center",md: "start"}}>
                 {displayMovies}                 
             </Flex>

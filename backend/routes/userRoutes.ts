@@ -10,7 +10,9 @@ import {
     dislikeAnswer,
     likeComment, 
     getUserInfo,
-    dislikeComment } from '../controllers/userControllers';
+    dislikeComment, 
+    updateUserCredentials,
+    disableNotify} from '../controllers/userControllers';
 
 
 const router = express.Router();
@@ -23,9 +25,11 @@ router.get('/getUserInfo',requireAuth,getUserInfo);
 router.post('/addThread',requireAuth,addThread);
 router.post('/addAnswer',requireAuth,addAnswer);
 router.post('/addComment',requireAuth,addComment);
-router.post('/likeAnswer',requireAuth,likeAnswer);
-router.post('/dislikeAnswer',requireAuth,dislikeAnswer);
-router.post('/likeComment',requireAuth,likeComment);
-router.post('/dislikeComment',requireAuth,dislikeComment);
+router.put('/likeAnswer',requireAuth,likeAnswer);
+router.put('/dislikeAnswer',requireAuth,dislikeAnswer);
+router.put('/likeComment',requireAuth,likeComment);
+router.put('/dislikeComment',requireAuth,dislikeComment);
+router.put('/updateUserCredentials',requireAuth,updateUserCredentials);
+router.put('/disableNotification',requireAuth,disableNotify);
 
 export default router

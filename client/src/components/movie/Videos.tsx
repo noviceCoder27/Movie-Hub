@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { AspectRatio, Box } from '@chakra-ui/react';
-import { IVideos } from '../../utils/hooks/useMovieInfo';
+import { IVideos } from '../../utils/hooks/movies/useMovieInfo';
 
 interface Props {
     videos: IVideos[] | undefined
@@ -32,11 +32,15 @@ const Videos = ({videos}: Props) => {
                     slidesPerView: 1,
                     spaceBetween: 20,
                 },
-                  1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                  },
-                  
+                1024: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+                },
+
+                1750: {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                },    
             }}
             >
                 {displayVideos}

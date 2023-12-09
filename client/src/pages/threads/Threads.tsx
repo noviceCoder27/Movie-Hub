@@ -1,33 +1,50 @@
 import { useParams } from "react-router-dom"
 import CreateThread from "./../../components/threads/CreateThread"
-import { useState } from "react";
-import { Box, Button, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
-import { useThreads } from "../../utils/hooks/useThreads";
+import { useEffect, useState } from "react";
+import { Box, Button, CircularProgress, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
+import { useThreads } from "../../utils/hooks/threads/useThreads";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import User from "../../components/user/User";
 
-
-export interface Thread {
-      _id: number,
-      title: string,
-      description: string,
-      userName: string,
-      time: string,
-      movieId: string
+export const displayTime = (time: string) => {
+  const dateObj = new Date(time);
+  let hours = String(dateObj.getHours());
+    let amOrPm;
+    if(Number(hours) > 12) {
+      hours = String(Number(hours) - 12);
+      if(hours.length === 1) {
+        hours = '0' + hours;
+      }
+      amOrPm = 'PM'
+    } else {
+      amOrPm = 'AM'
+    }
+    let minutes = String(dateObj.getMinutes());
+    if(minutes.length === 1) {
+      minutes = '0'+ minutes;
+    }
+    return `${hours}:${minutes}${amOrPm}`;
 }
+
 
 const Threads = () => {
   const {movieId} = useParams();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [threads,setThreads] = useState<Thread[] | null>(null);
   const [createThread,setCreateThread] = useState(false);
   const {data,isLoading,isError,error} = useThreads(movieId);
+  const [threads,setThreads] = useState(data);
+  
+  useEffect(() => {
+    setThreads(data);
+  },[data]);
 
   if(isLoading) {
     return (
-      <div>Loading ...</div>
+      <Flex h = {'100vh'} alignItems = {'center'} justifyContent={'center'} bg = {'black'}>
+          <CircularProgress isIndeterminate color='red.300' size={'50%'} mt = {'5rem'} position={'absolute'} left = {'43%'}/>
+      </Flex>
     )
   }
 
@@ -44,6 +61,7 @@ const Threads = () => {
 
   const displayThreads = threads?.map(threadObj => (
     <Flex 
+        id = {threadObj._id}
         key = {threadObj._id} 
         justify={'space-between'}
         alignItems = {'center'}
@@ -63,7 +81,7 @@ const Threads = () => {
       <Flex gap = {'1rem'}>
         <Box>
           <Text color = {'gray'}>Created by</Text>
-          <Text>{threadObj.userName} at {threadObj.time}</Text>
+          <Text>{threadObj.creator_name} at {displayTime(threadObj.createdAt)}</Text>
         </Box>
         <Image w = {'50px'} src = {'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png'} alt = "User Image" />
       </Flex>
@@ -77,17 +95,20 @@ const Threads = () => {
 
   
   return (
-    <Flex alignItems = {'center'} direction = {'column'} bg= {'black'} minH={'100vh'} >
+    <Box>
         <Navbar />
         <User />
-        <Flex pt = {'10rem'} w= {'70%'}>
-          <Button ml = {'auto'} bg = {'red.300'} _hover = {{bg: 'red.400'}} onClick={create}>Add a new thread</Button>
-        </Flex>
-        <Flex direction={'column'} width={'70%'} mt ={'3rem'} gap = {'1rem'} color ='white'>
-          {displayThreads}
-        </Flex>
-        {createThread && <CreateThread setThreads = {setThreads} setCreateThread = {setCreateThread} isOpen = {isOpen} onClose = {onClose} />}
-    </Flex >
+        <Flex alignItems = {'center'} direction = {'column'} bg= {'black'} minH={'100vh'} >
+            <Flex pt = {'10rem'} w= {'70%'}>
+              <Button ml = {'auto'} bg = {'red.300'} _hover = {{bg: 'red.400'}} onClick={create}>Add a new thread</Button>
+            </Flex>
+            <Flex direction={'column'} width={'70%'} mt ={'3rem'} gap = {'1rem'} color ='white'>
+              {displayThreads}
+            </Flex>
+            {createThread && <CreateThread setThreads = {setThreads} setCreateThread = {setCreateThread} isOpen = {isOpen} onClose = {onClose} />}
+        </Flex >
+    </Box>
+    
   )
 }
 

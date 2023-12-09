@@ -10,6 +10,11 @@ import TopRated from './pages/movies/TopRated';
 import Upcoming from './pages/movies/Upcoming';
 import Threads from './pages/threads/Threads';
 import Thread from './pages/threads/Thread';
+import { RecoilRoot} from 'recoil';
+import UserThreads from './pages/threads/UserThreads';
+import Activities from './pages/Activities';
+import NotFound from './pages/NotFound';
+
 
 function App() {
 
@@ -25,10 +30,13 @@ function App() {
           <Route path = "/top_rated" element = {<TopRated />} />
           <Route path = "/upcoming" element = {<Upcoming />} />
           <Route path = "/movies/:movieId" element = {<Movie />} />
-          <Route path = "movies/:movieId/threads" element = {<Threads />} />
-          <Route path = "movies/:movieId/threads/:threadId" element = {<Thread />} />
+          <Route path = "movies/:movieId/threads" element = {<RecoilRoot><Threads /></RecoilRoot>} />
+          <Route path = "/myThreads" element = {<UserThreads />} />
+          <Route path = "/activities" element = {<Activities />} />
+          <Route path = "movies/:movieId/threads/:threadId" element = {<RecoilRoot><Thread /></RecoilRoot>} />
           <Route path = "/login" element = {<Login />}/>
           <Route path = "/register" element = {<Register />}/>
+          <Route path = "*" element = {<NotFound />} />
         </Routes>
       </Router>
     </QueryClientProvider>

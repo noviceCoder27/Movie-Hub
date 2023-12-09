@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Image, Skeleton, Text } from "@chakra-ui/react";
-import { useSimilarMovies } from "../../utils/hooks/useSimilarMovies"
+import { useSimilarMovies } from "../../utils/hooks/movies/useSimilarMovies"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Link } from "react-router-dom";

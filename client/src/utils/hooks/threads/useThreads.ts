@@ -1,22 +1,16 @@
 import axios from "axios";
 import { useQuery } from "react-query"
+import { Thread } from "../../../pages/threads/Thread";
 
 
-interface Thread {
-    title: string,
-    description: string,
-    userName: string,
-    createdAt: string
-    _id: string,
-}
-
-export const useThreads = async (movieId:string| undefined) => {
-    const options = {
-        headers: {
-            movie_id: movieId
-        }
-    }
+export const useThreads = (movieId:string| undefined) => {
+    
     const getThreads = async () => {
+        const options = {
+            headers: {
+                movie_id: movieId
+            }
+        }
         try {
             const response = await axios.get(`http://localhost:3000/threads/getThreads`,options);
             return response.data;
@@ -26,7 +20,7 @@ export const useThreads = async (movieId:string| undefined) => {
        
     }
     const {data,isLoading,isError,error} = useQuery<Thread[],Error>('threads',getThreads);
-    return {data,isLoading,isError,error}
+    return {data,isLoading,isError,error};
 }
 
 

@@ -1,49 +1,42 @@
 import axios from "axios";
-import { Thread } from './Threads';
 import { useRef, useState } from "react";
-import { Button, FormControl, FormLabel, Input, Modal, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Button, FormControl, FormLabel, Input, Modal, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import { getFromLocal } from "../../utils/localStorage/getLocalValue";
+
 
 
 interface Props {
-    setThreads: React.Dispatch<React.SetStateAction<Thread[] | null>>,
+    setThreads: React.Dispatch<React.SetStateAction<Thread[] | undefined>>,
     setCreateThread: React.Dispatch<React.SetStateAction<boolean>>
     isOpen: boolean,
     onClose: () => void
 }
 
 const CreateThread = ({setThreads,setCreateThread,isOpen,onClose}: Props) => {
+    const {movieId} = useParams();
     const initialRef = useRef(null)
     const finalRef = useRef(null)
-    const [thread,setThread] = useState<Thread>({ 
-        _id: 4,
+    const [thread,setThread] = useState({ 
         title: "",
         description: "",
-        userName: "mugdha",
-        time: "5:32PM",
-        movieId: "299054"}) 
+        movie_id: movieId || ""}); 
     const createThread = async() => {
-        // const options = {
-        //     headers: {
-        //       Authorization: 'Bearer ' + localStorage.getItem("token"),
-        //     },
-        // }  
-        // const response = await axios.post('http://localhost:3000/user/addThread',thread,options);
-        // console.log(response);
+        const options = {
+            headers: {
+              Authorization: 'Bearer ' + getFromLocal(),
+            },
+        }  
+        const response = await axios.post('http://localhost:3000/user/addThread',thread,options);
         onClose();
-        setThreads(prev=> {
-            if(prev) {
-                return [...prev,thread];
-            }
-            return [thread];
-        });
-
+        setThreads(prev => prev ? [...prev,response.data]: [response.data]);
     }
 
     const close = () => {
         setCreateThread(false);
         onClose();
     }
-
+    
     return (
             <Modal
             initialFocusRef={initialRef}

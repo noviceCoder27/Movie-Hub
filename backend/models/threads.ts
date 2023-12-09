@@ -8,7 +8,9 @@ interface Comment {
     comment_id: number,
     likes: number,
     dislikes: number,
-    user_id: string
+    user_id: string,
+    user_name: string,
+    createdAt: Date,
 }
 
 interface Answer {
@@ -18,6 +20,8 @@ interface Answer {
     dislikes: number,
     answer_id: number
     user_id: string,
+    user_name: string,
+    createdAt: Date,
 }
 
 interface Discussion {
@@ -29,6 +33,7 @@ export interface IThreads extends Document {
     title: string,
     descrtiption: string,
     creator_id: string,
+    creator_name: string,
     movie_id: string,
     discussion_box: Discussion
 }
@@ -37,6 +42,7 @@ const ThreadsSchema = new Schema({
     title :{ type: String, required: true },
     description :{ type: String, required: true },
     creator_id :{ type: String, required: true },
+    creator_name :{ type: String, required: true },
     movie_id: {type: String,required: true},
     discussion_box: {type: Object,required: true},
 },{timestamps: true})

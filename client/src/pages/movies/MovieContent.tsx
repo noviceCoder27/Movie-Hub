@@ -1,5 +1,5 @@
 import {useParams} from 'react-router-dom'
-import { useMovieInfo } from '../../utils/hooks/useMovieInfo'
+import { useMovieInfo } from '../../utils/hooks/movies/useMovieInfo'
 import { Box,CircularProgress,Flex,Heading, Image, Text } from '@chakra-ui/react';
 import Videos from '../../components/movie/Videos';
 import Details from '../../components/movie/Details';
@@ -26,7 +26,7 @@ const MovieContent = () => {
         [movie,cast,videos] = data;
     }
     return (
-        <Box pt = {{xl: "12rem"}} color = {'white'} p = {'3rem'}>
+        <Box pt = {{lg: "12rem"}} color = {'white'} p = {'3rem'}>
             <Image opacity = {'30%'} left = {'0'} top = {'0'}pos = {'absolute'} src = {`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} h = {'25%'} w = {'100%'}/>
             <Details movie = {movie} cast = {cast}/>
             <Flex direction={'column'} gap = {'2rem'} mt ={'4rem'}>

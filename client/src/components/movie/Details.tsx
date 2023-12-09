@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react"
-import { IMovie,ICast } from "../../utils/hooks/useMovieInfo"
+import { IMovie,ICast } from "../../utils/hooks/movies/useMovieInfo"
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Details = ({movie,cast}: Props) => {
         <Flex direction = {'column'} flexWrap = {'wrap'}alignItems = {'center'} key = {actor.id} gap={'0.5rem'}>
             <Flex flexWrap={'wrap'} >
                 {actor?.profile_path ? 
-                <Image src = {`https://image.tmdb.org/t/p/original/${actor?.profile_path}`} alt="Actor image" maxH = {'100px'}height={'12vh'} width={'8vw'} maxW={'100px'} minH={'50px'} minW={'50px'} borderRadius={'50%'}/>
+                <Image src = {`https://image.tmdb.org/t/p/original/${actor?.profile_path}`} alt="Actor image" maxH = {'60px'}height={'8vh'} width={'4vw'} maxW={'100px'} minH={'50px'} minW={'50px'} borderRadius={'50%'}/>
                 :
                 <Box >
                     <FaRegUserCircle style = {{fontSize: "550%"}}/>
@@ -38,7 +38,7 @@ const Details = ({movie,cast}: Props) => {
 
     return (
         <Flex pos = {'relative'} zIndex = {'2'} gap = {'4rem'} direction={{base: "column", lg: "row"}} alignItems={{base: 'center',lg: 'start'}}>
-            <Box  borderRadius={'12px'}>
+            <Box  borderRadius={'12px'} maxW={'400px'}>
                 <Image src= {`https://image.tmdb.org/t/p/original/${movie?.poster_path}`} boxShadow={'0px 7px 29px 0px rgba(100, 100, 111, 0.2)'} alt="Movie Image" height={'500px'} width={'500px'} borderRadius={'12px'}/>
             </Box>
             <Flex direction = {'column'} gap = {'1.2rem'} width={'fit-content'}>
