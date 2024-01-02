@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Background from '../../assets/background1.jpeg'
 import Pagination from "../../components/Pagination";
 import { useState } from "react";
+import SearchBox from "../../components/SearchBox";
+import { useMovie } from "../../utils/hooks/movies/useMovie";
 
 
 interface Props {
@@ -12,7 +14,9 @@ interface Props {
 
 const Movies = ({category}: Props) => {
     const [page,setPage] = useState(1);
+    const [movieName,setMovieName] = useState("");
     const {data,error,isLoading,isError} = useMovies(category,page);
+    const movieResults = useMovie(movieName);
     const arr = [0,0,0,0,0];
     const skeleton = arr.map((_,index)  => (
         <Box mt = {{md: "8rem"}} key = {index} maxW={"200px"} h = {'320px'} bgColor={"black"}>
@@ -37,9 +41,11 @@ const Movies = ({category}: Props) => {
                 <Text mt = {{md: "8rem"}}>Error loading data: {error?.message}</Text>
             </Box>
         )
-    }    
+    }   
+
+    
     const allMovies = data?.filter((_,index) => index < data.length-1)
-    const displayMovies = allMovies?.map(movie => (
+    const displayMovies = ((movieResults && movieResults.length) ? movieResults : allMovies)?.map(movie => (
         <Box key = {movie.id} maxW={"200px"} bgColor={"black"} _hover={{transform: "scale(1.1)"}} boxShadow={"0px 7px 29px 0px black"}>
             <Box marginBottom={"1rem"} >
                 <Image src= {`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt="Movie Image" height={'200px'} width={'200px'} loading="lazy"/>
@@ -53,6 +59,9 @@ const Movies = ({category}: Props) => {
     return (
         <Flex direction = {"column"} backgroundImage={Background} backgroundRepeat={"no-repeat"} backgroundSize={"cover"}>
             <Heading mt = {{lg: "6rem"}} color = {"white"} pl = {"2rem"} pt = {"2rem"} textShadow={"0px 7px 0px black"}>{category?.toUpperCase() + "..."}</Heading>
+            <Box ml = {'auto'} mr = {'auto'} w = {'50%'} my = {'2rem'}>
+                <SearchBox setMovieName = {setMovieName}/>
+            </Box>
             <Flex flexWrap={"wrap"} gap = {"2rem"} p = {"2rem"} justifyContent={{base: "center",md: "start"}}>
                 {displayMovies}                 
             </Flex>

@@ -25,7 +25,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [openCategories,setOpenCategories] = useState(false);
     const [token,setToken] = useState(getFromLocal());
-    const {data} = useUserInfo();
+    const data = useUserInfo(token);
     const [user,setUser] = useState(data);
 
     useEffect(() => {

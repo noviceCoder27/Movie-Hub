@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useQuery } from 'react-query'
-import { getFromLocal } from '../../localStorage/getLocalValue'
+import { useEffect, useState } from 'react'
+
 
 
 interface IUser {
@@ -10,17 +10,24 @@ interface IUser {
     profilePicture: string
 }
 
-export const useUserInfo = () => {
+export const useUserInfo = (token: string | null) => {
+    const [userInfo,setUserInfo] = useState<IUser | null>(null);
 
-    const fetchUserData = async() => {
-    const options = {
-            headers: {
-                Authorization: "Bearer " + getFromLocal()
+    useEffect(() => {
+        const fetchUserData = async() => {
+            const options = {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }
+                if(token) {
+                    const response = await axios.get('http://localhost:3000/user/getUserInfo',options);
+                    setUserInfo(response.data);
+                } else {
+                    setUserInfo(null);
+                }
             }
-        }
-        const response = await axios.get('http://localhost:3000/user/getUserInfo',options);
-        return response.data;
-    }
-    const {data,isLoading,isError,error} = useQuery<IUser,Error>('user',fetchUserData);
-    return {data,isLoading,isError,error}
+        fetchUserData();
+    },[token])
+    return userInfo;
 }
