@@ -3,7 +3,6 @@ import { GoReply } from "react-icons/go";
 import { AiFillLike } from "react-icons/ai";
 import { AiFillDislike } from "react-icons/ai";
 import { useState } from "react";
-import { displayTime } from "../../pages/threads/Threads";
 import { AnswerValues, IComment } from "../../pages/threads/Thread";
 import Comments from "./Comments";
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
@@ -12,6 +11,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { threadState } from "../../store/atoms/thread";
 import { getThreadId } from "../../store/selectors/threads";
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo";
+import { displayTime } from "../../utils/timestamp";
 
 interface Props {
     id: string,

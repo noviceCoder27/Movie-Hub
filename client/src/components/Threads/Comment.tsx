@@ -1,12 +1,12 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react"
 import { AiFillDislike, AiFillLike } from "react-icons/ai"
-import { displayTime } from "../../pages/threads/Threads"
 import axios from "axios"
 import { getThreadId } from "../../store/selectors/threads"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import { getFromLocal } from "../../utils/localStorage/getLocalValue"
 import { threadState } from "../../store/atoms/thread"
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo"
+import { displayTime } from "../../utils/timestamp"
 
 interface Props {
     content: string,

@@ -5,12 +5,12 @@ import User from "../../components/user/User";
 import CreateAnswer from "../../components/threads/CreateAnswer";
 import { useThreadInfo } from "../../utils/hooks/threads/useThreadInfo";
 import { useEffect, useState } from "react";
-import { displayTime } from './Threads';
 import Answers from "../../components/threads/Answers";
 import { useRecoilState } from "recoil";
 import { threadState } from "../../store/atoms/thread";
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo";
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
+import { displayTime } from "../../utils/timestamp";
 
 
 export interface IComment {

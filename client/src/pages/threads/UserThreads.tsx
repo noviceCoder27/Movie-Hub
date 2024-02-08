@@ -4,8 +4,8 @@ import { useUserThreads } from "../../utils/hooks/threads/useUserThreads";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import User from "../../components/user/User";
-import { displayTime } from "./Threads";
 import { Thread } from "./Thread";
+import { displayTime } from "../../utils/timestamp";
 
 
 
