@@ -25,7 +25,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [openCategories,setOpenCategories] = useState(false);
     const [token,setToken] = useState(getFromLocal());
-    const data = useUserInfo(token);
+    const data = useUserInfo();
     const [user,setUser] = useState(data);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const Navbar = () => {
             }
         }
         try {
-            await axios.put('http://localhost:3000/user/disableNotification',{},options);
+            await axios.put('https://movie-hub-production.up.railway.app/user/disableNotification',{},options);
             navigate("/activities");
         } catch(err) {
             console.log(err);

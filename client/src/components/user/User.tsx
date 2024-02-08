@@ -59,7 +59,7 @@ const User = () => {
             }
         }
         try {
-            await axios.put('http://localhost:3000/user/updateUserCredentials',userDetails,options);
+            await axios.put('https://movie-hub-production.up.railway.app/user/updateUserCredentials',userDetails,options);
             onClose();
         } catch(err) {
             console.log(err)
@@ -73,7 +73,7 @@ const User = () => {
             }
         }
         try {
-            await axios.put('http://localhost:3000/user/disableNotification',{},options);
+            await axios.put('https://movie-hub-production.up.railway.app/user/disableNotification',{},options);
             navigate("/activities");
         } catch(err) {
             console.log(err);

@@ -12,7 +12,7 @@ export const useThreadInfo = (threadId:string| undefined) => {
         }
     }
     const getThreadInfo = async () => {
-        const response = await axios.get(`http://localhost:3000/threads/getThread`,options);
+        const response = await axios.get(`https://movie-hub-production.up.railway.app/threads/getThread`,options);
         return response.data;
     }
     const {data,isLoading,isError,error} = useQuery(['thread',threadId],getThreadInfo);

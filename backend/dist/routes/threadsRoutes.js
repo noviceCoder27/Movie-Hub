@@ -9,5 +9,5 @@ const threadsControllers_1 = require("../controllers/threadsControllers");
 const router = express_1.default.Router();
 router.get('/getThreads', threadsControllers_1.getThreads);
 router.get('/getUserThreads', requireAuth_1.requireAuth, threadsControllers_1.getUserThreads);
-router.get('/getThread', requireAuth_1.requireAuth, threadsControllers_1.getThread);
+router.get('/getThread', threadsControllers_1.getThread);
 exports.default = router;

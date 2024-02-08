@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { getFromLocal } from '../../localStorage/getLocalValue'
 
 
 
@@ -10,7 +11,8 @@ interface IUser {
     profilePicture: string
 }
 
-export const useUserInfo = (token: string | null) => {
+export const useUserInfo = () => {
+    const token = getFromLocal();
     const [userInfo,setUserInfo] = useState<IUser | null>(null);
 
     useEffect(() => {
@@ -21,7 +23,7 @@ export const useUserInfo = (token: string | null) => {
                     }
                 }
                 if(token) {
-                    const response = await axios.get('http://localhost:3000/user/getUserInfo',options);
+                    const response = await axios.get('https://movie-hub-production.up.railway.app/user/getUserInfo',options);
                     setUserInfo(response.data);
                 } else {
                     setUserInfo(null);

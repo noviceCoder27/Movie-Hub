@@ -12,7 +12,7 @@ export const useThreads = (movieId:string| undefined) => {
             }
         }
         try {
-            const response = await axios.get(`http://localhost:3000/threads/getThreads`,options);
+            const response = await axios.get(`https://movie-hub-production.up.railway.app/threads/getThreads`,options);
             return response.data;
         } catch(err) {
             throw new Error((err as Error).message);

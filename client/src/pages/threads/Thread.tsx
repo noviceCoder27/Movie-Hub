@@ -62,7 +62,7 @@ const Thread = () => {
     const {data,isLoading,isError,error} = useThreadInfo(threadId);
     const [threadInfo,setThreadInfo] = useRecoilState(threadState);
     const [answer,setAnswer] = useState<AnswerValues>({thread_id: threadId,content: "",answer_id: null});
-    const {data:userData} = useUserInfo();
+    const userData = useUserInfo();
 
     useEffect(() => {
         setThreadInfo(data);

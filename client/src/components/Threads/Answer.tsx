@@ -31,7 +31,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
     const [showReplies,setShowReplies] = useState(false);
     const threadId = useRecoilValue(getThreadId);
     const setThread = useSetRecoilState(threadState);
-    const {data} = useUserInfo();
+    const data = useUserInfo();
 
     const setAnswerId = () => {
         setAnswer(prev=> ({...prev,answer_id: answerId}));
@@ -50,7 +50,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const likeAnswer = async () => {
         try {
-            const response = await axios.put('http://localhost:3000/user/likeAnswer',answer,options);
+            const response = await axios.put('https://movie-hub-production.up.railway.app/user/likeAnswer',answer,options);
             setThread(response.data);
         } catch(err) {
             console.log("Error upvoting",err);
@@ -59,7 +59,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const dislikeAnswer = async () => {
         try {
-            const response = await axios.put('http://localhost:3000/user/dislikeAnswer',answer,options);
+            const response = await axios.put('https://movie-hub-production.up.railway.app/user/dislikeAnswer',answer,options);
             setThread(response.data);
 
         } catch(err) {

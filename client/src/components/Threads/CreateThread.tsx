@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Button, FormControl, FormLabel, Input, Modal, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
+import { Thread } from "../../pages/threads/Thread";
 
 
 
@@ -27,7 +28,7 @@ const CreateThread = ({setThreads,setCreateThread,isOpen,onClose}: Props) => {
               Authorization: 'Bearer ' + getFromLocal(),
             },
         }  
-        const response = await axios.post('http://localhost:3000/user/addThread',thread,options);
+        const response = await axios.post('https://movie-hub-production.up.railway.app/user/addThread',thread,options);
         onClose();
         setThreads(prev => prev ? [...prev,response.data]: [response.data]);
     }

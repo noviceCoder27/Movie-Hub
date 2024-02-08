@@ -6,6 +6,7 @@ import { useThreads } from "../../utils/hooks/threads/useThreads";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import User from "../../components/user/User";
+import { getFromLocal } from "../../utils/localStorage/getLocalValue";
 
 export const displayTime = (time: string) => {
   const dateObj = new Date(time);
@@ -100,7 +101,7 @@ const Threads = () => {
         <User />
         <Flex alignItems = {'center'} direction = {'column'} bg= {'black'} minH={'100vh'} >
             <Flex pt = {'10rem'} w= {'70%'}>
-              <Button ml = {'auto'} bg = {'red.300'} _hover = {{bg: 'red.400'}} onClick={create}>Add a new thread</Button>
+              {getFromLocal() && <Button ml = {'auto'} bg = {'red.300'} _hover = {{bg: 'red.400'}} onClick={create}>Add a new thread</Button>}
             </Flex>
             <Flex direction={'column'} width={'70%'} mt ={'3rem'} gap = {'1rem'} color ='white'>
               {displayThreads}

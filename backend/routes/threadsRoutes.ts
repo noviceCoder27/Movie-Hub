@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get('/getThreads', getThreads);
 router.get('/getUserThreads',requireAuth,getUserThreads);
-router.get('/getThread',requireAuth,getThread);
+router.get('/getThread',getThread);
 
 export default router;

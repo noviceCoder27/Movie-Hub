@@ -20,7 +20,7 @@ const Form = ({formAction,heading,text}: Props) => {
     const submit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:3000/user/${formAction}`,user);
+            const response = await axios.post(`https://movie-hub-production.up.railway.app/user/${formAction}`,user);
             const token = response.data.token;
             setWithExpiry("token",token);
             navigate('/');
