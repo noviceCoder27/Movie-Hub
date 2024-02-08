@@ -1,6 +1,7 @@
 {
 	"scripts": {
-		"dev": "tsnd --respawn server.ts"
+		"dev": "tsnd --respawn server.ts",
+		"start": "node dist/server.js"
 	},
 	"dependencies": {
 		"@types/bcrypt": "^5.0.2",
