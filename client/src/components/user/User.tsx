@@ -33,7 +33,7 @@ const User = () => {
     const {isOpen,onOpen,onClose} = useDisclosure();
     const maleImg = 'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png'
     const femaleImg = 'https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_user_people_person_avatar_black_tone_icon_159361.png';
-    const data = useUserInfo(token);
+    const data = useUserInfo();
     const [user,setUser] = useState(data);
     useEffect(() => {
         setUser(data);

@@ -80,15 +80,15 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
             <Flex alignItems={'center'} gap = {'1.2rem'}>
                 <Flex alignItems={'center'} gap = {'0.5rem'} >
                     <Box cursor={'pointer'} _hover = {{color: "red.300"}}>
-                        <AiFillLike onClick = {likeAnswer}/>
+                        {getFromLocal() && <AiFillLike onClick = {likeAnswer}/>}
                     </Box>
                     <Text>{likes-dislikes}</Text>
                     <Box cursor={'pointer'} _hover = {{color: "red.300"}}>
-                        <AiFillDislike onClick = {dislikeAnswer}/>
+                        {getFromLocal() && <AiFillDislike onClick = {dislikeAnswer}/>}
                     </Box>
                 </Flex>
                 <Box cursor={'pointer'} _hover={{color: 'blue.300'}}>
-                    <GoReply onClick = {generateComment}/>
+                    {getFromLocal() && <GoReply onClick = {generateComment}/>}
                 </Box>
             </Flex>
             <Button onClick={() => setShowReplies(prev => !prev)} maxW={'500px'}>{showReplies ? 'Hide': 'Show'} Replies</Button>

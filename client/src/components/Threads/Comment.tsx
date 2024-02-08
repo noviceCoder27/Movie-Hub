@@ -60,11 +60,11 @@ const Comment = ({content,likes,dislikes,createdAt,userName,answerId,id}: Props)
                 <Flex alignItems={'center'} gap = {'1.2rem'}>
                     <Flex alignItems={'center'} gap = {'0.5rem'} >
                         <Box cursor={'pointer'} _hover = {{color: "red.300"}}>
-                            <AiFillLike onClick = {likeComment}/>
+                            {getFromLocal() && <AiFillLike onClick = {likeComment}/>}
                         </Box>
                         <Text>{likes-dislikes}</Text>
                         <Box cursor={'pointer'} _hover = {{color: "red.300"}}>
-                            <AiFillDislike onClick = {dislikeComment}/>
+                            {getFromLocal() && <AiFillDislike onClick = {dislikeComment}/>}
                         </Box>
                     </Flex>
                 </Flex>

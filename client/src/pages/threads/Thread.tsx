@@ -10,6 +10,7 @@ import Answers from "../../components/threads/Answers";
 import { useRecoilState } from "recoil";
 import { threadState } from "../../store/atoms/thread";
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo";
+import { getFromLocal } from "../../utils/localStorage/getLocalValue";
 
 
 export interface IComment {
@@ -102,7 +103,7 @@ const Thread = () => {
                             <Text>{threadInfo?.creator_name} at {displayTime(threadInfo?.createdAt)}</Text>
                         </Box>
                         <Image src = {userData?.profilePicture || 'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png'} w= {'10%'} maxW={'50px'} alt = "User Icon"/>
-                        <Button ml ={'auto'} bg = {'transparent'} color ={'white'} border={'2px solid white'} borderRadius={'20px'} _hover = {{bg: "transparent", color: "red.300"}} onClick={openAnsModal}>Add Answer</Button>
+                        {getFromLocal() && <Button ml ={'auto'} bg = {'transparent'} color ={'white'} border={'2px solid white'} borderRadius={'20px'} _hover = {{bg: "transparent", color: "red.300"}} onClick={openAnsModal}>Add Answer</Button>}
                     </Flex>
                 </Flex>
                 <Answers onOpen = {onOpen} setAnswer = {setAnswer} discussion_box = {threadInfo?.discussion_box} />
