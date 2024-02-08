@@ -20,8 +20,10 @@ const UserSchema = new Schema({
     userName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    profilePic: { type: String },
-    threads: { type: (Array) }
+    notify: { type: Boolean, required: true },
+    profilePicture: { type: String },
+    threads: { type: (Array) },
+    activities: { type: (Array) }
 }, { timestamps: true });
 UserSchema.statics.register = function (userName, email, password) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -49,7 +51,7 @@ UserSchema.statics.login = function (userName, email, password) {
         if (!validator_1.default.isEmail(email)) {
             return null;
         }
-        const user = yield this.findOne({ userName, email });
+        const user = yield this.findOne({ email });
         const verified = yield bcrypt_1.default.compare(password, user.password);
         if (verified) {
             return user;

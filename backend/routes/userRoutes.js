@@ -1,12 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const requireAuth_1 = require("./../middleware/requireAuth");
-const userControllers_1 = require("../controllers/userControllers");
-const router = express_1.default.Router();
+exports.__esModule = true;
+var express_1 = require("express");
+var requireAuth_1 = require("./../middleware/requireAuth");
+var userControllers_1 = require("../controllers/userControllers");
+var router = express_1["default"].Router();
 router.post('/register', userControllers_1.register);
 router.post('/login', userControllers_1.login);
 router.get('/getUserInfo', requireAuth_1.requireAuth, userControllers_1.getUserInfo);
@@ -19,4 +16,4 @@ router.put('/likeComment', requireAuth_1.requireAuth, userControllers_1.likeComm
 router.put('/dislikeComment', requireAuth_1.requireAuth, userControllers_1.dislikeComment);
 router.put('/updateUserCredentials', requireAuth_1.requireAuth, userControllers_1.updateUserCredentials);
 router.put('/disableNotification', requireAuth_1.requireAuth, userControllers_1.disableNotify);
-exports.default = router;
+exports["default"] = router;
