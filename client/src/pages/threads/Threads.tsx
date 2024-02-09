@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import CreateThread from "./../../components/threads/CreateThread"
+import CreateThread from "../../components/threads/CreateThread"
 import { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, Flex, Image, Text, useDisclosure } from "@chakra-ui/react";
 import { useThreads } from "../../utils/hooks/threads/useThreads";

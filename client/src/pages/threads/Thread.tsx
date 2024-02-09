@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Flex, Heading, Image, Text, useDisclosur
 import { useParams } from "react-router-dom"
 import Navbar from "../../components/Navbar"
 import User from "../../components/user/User";
-import CreateAnswer from "./../../components/threads/CreateAnswer";
+import CreateAnswer from "../../components/threads/CreateAnswer";
 import { useThreadInfo } from "../../utils/hooks/threads/useThreadInfo";
 import { useEffect, useState } from "react";
 import Answers from "../../components/threads/Answers";
