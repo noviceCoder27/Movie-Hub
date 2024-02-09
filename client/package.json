@@ -28,6 +28,7 @@
     "swiper": "^11.0.4"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-hash-link": "^2.4.9",
