@@ -14,7 +14,7 @@ const activityRoutes_1 = __importDefault(require("./routes/activityRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: "http://localhost:5173"
+    origin: "https://movie-hub027.netlify.app"
 }));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
