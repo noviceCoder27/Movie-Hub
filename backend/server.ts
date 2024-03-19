@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: "https://movie-hub027.netlify.app"
+    origin: "https://movie-hub27.netlify.app"
 }));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));

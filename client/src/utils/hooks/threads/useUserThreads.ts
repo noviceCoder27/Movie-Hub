@@ -13,7 +13,7 @@ export const useUserThreads = () => {
             }
         }
         try {
-            const response = await axios.get(`https://movie-hub-production.up.railway.app/getUserThreads`,options);
+            const response = await axios.get(`https://movie-hub-lqtp.onrender.com/getUserThreads`,options);
             return response.data;
         } catch(err) {
             throw new Error((err as Error).message);

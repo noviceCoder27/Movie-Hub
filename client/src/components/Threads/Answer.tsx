@@ -50,7 +50,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const likeAnswer = async () => {
         try {
-            const response = await axios.put('https://movie-hub-production.up.railway.app/user/likeAnswer',answer,options);
+            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/likeAnswer',answer,options);
             setThread(response.data);
         } catch(err) {
             console.log("Error upvoting",err);
@@ -59,7 +59,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const dislikeAnswer = async () => {
         try {
-            const response = await axios.put('https://movie-hub-production.up.railway.app/user/dislikeAnswer',answer,options);
+            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/dislikeAnswer',answer,options);
             setThread(response.data);
 
         } catch(err) {

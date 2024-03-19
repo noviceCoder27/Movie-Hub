@@ -19,7 +19,7 @@ export const useUserActivity = () => {
             }
         }
         try {
-            const response = await axios.get(`https://movie-hub-production.up.railway.app/activity/userActivities`,options);
+            const response = await axios.get(`https://movie-hub-lqtp.onrender.com/activity/userActivities`,options);
             return response.data;
         } catch(err) {
             throw new Error((err as Error).message);

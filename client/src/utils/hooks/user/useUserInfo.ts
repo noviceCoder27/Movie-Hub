@@ -23,7 +23,7 @@ export const useUserInfo = () => {
                     }
                 }
                 if(token) {
-                    const response = await axios.get('https://movie-hub-production.up.railway.app/user/getUserInfo',options);
+                    const response = await axios.get('https://movie-hub-lqtp.onrender.com/user/getUserInfo',options);
                     setUserInfo(response.data);
                 } else {
                     setUserInfo(null);

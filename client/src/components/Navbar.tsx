@@ -44,7 +44,7 @@ const Navbar = () => {
             }
         }
         try {
-            await axios.put('https://movie-hub-production.up.railway.app/user/disableNotification',{},options);
+            await axios.put('https://movie-hub-lqtp.onrender.com/user/disableNotification',{},options);
             navigate("/activities");
         } catch(err) {
             console.log(err);

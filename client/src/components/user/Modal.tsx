@@ -42,7 +42,7 @@ const UserModal = ({openModal,setOpenModal}: Props) => {
             }
         }
         try {
-            await axios.put('https://movie-hub-production.up.railway.app/user/updateUserCredentials',userDetails,options);
+            await axios.put('https://movie-hub-lqtp.onrender.com/user/updateUserCredentials',userDetails,options);
             setOpenModal(false);
         } catch(err) {
             console.log(err)

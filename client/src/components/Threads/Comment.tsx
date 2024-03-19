@@ -30,7 +30,7 @@ const Comment = ({content,likes,dislikes,createdAt,userName,answerId,id}: Props)
     const comment = {thread_id: threadId, answer_id: answerId, comment_id: id};
     const likeComment = async () => {
         try {
-            const response = await axios.put('https://movie-hub-production.up.railway.app/user/likeComment',comment,options);
+            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/likeComment',comment,options);
             setThread(response.data);
         } catch(err) {
             console.log("Error upvoting",err);
@@ -39,7 +39,7 @@ const Comment = ({content,likes,dislikes,createdAt,userName,answerId,id}: Props)
 
     const dislikeComment = async () => {
         try {
-            const response = await axios.put('https://movie-hub-production.up.railway.app/user/dislikeComment',comment,options);
+            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/dislikeComment',comment,options);
             setThread(response.data);
 
         } catch(err) {

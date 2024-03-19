@@ -31,7 +31,7 @@ const CreateAnswer = ({isOpen,onClose,threadId,answer,setAnswer}:Props) => {
                 Authorization: "Bearer " + getFromLocal()
             }
         }
-        const response = await axios.post(`https://movie-hub-production.up.railway.app/user/addAnswer`,answer,options);
+        const response = await axios.post(`https://movie-hub-lqtp.onrender.com/user/addAnswer`,answer,options);
         setAnswer({thread_id: threadId,content: "",answer_id: null});
         setThread(response.data);
         onClose();
@@ -42,7 +42,7 @@ const CreateAnswer = ({isOpen,onClose,threadId,answer,setAnswer}:Props) => {
                 Authorization: "Bearer " + getFromLocal()
             }
         }
-        const response = await axios.post(`https://movie-hub-production.up.railway.app/user/addComment`,answer,options);
+        const response = await axios.post(`https://movie-hub-lqtp.onrender.com/user/addComment`,answer,options);
         setAnswer({thread_id: threadId,content: "",answer_id: null});
         setThread(response.data);
         onClose();

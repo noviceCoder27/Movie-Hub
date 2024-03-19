@@ -28,7 +28,7 @@ const CreateThread = ({setThreads,setCreateThread,isOpen,onClose}: Props) => {
               Authorization: 'Bearer ' + getFromLocal(),
             },
         }  
-        const response = await axios.post('https://movie-hub-production.up.railway.app/user/addThread',thread,options);
+        const response = await axios.post('https://movie-hub-lqtp.onrender.com/user/addThread',thread,options);
         onClose();
         setThreads(prev => prev ? [...prev,response.data]: [response.data]);
     }
