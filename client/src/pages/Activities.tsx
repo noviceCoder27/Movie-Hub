@@ -28,7 +28,7 @@ const Activities = () => {
   }
 
   
-  const filteredActivities = activities ? [...activities].reverse(): activities;
+  const filteredActivities = activities ? [...activities].reverse(): null;
 
 
   const displayActivities = filteredActivities?.map(activity => (

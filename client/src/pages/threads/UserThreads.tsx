@@ -36,11 +36,11 @@ const UserThreads = () => {
     navigate(`/movies/${threadObj.movie_id}/threads/${threadObj._id}`)
   }
 
-  const filteredThreads = threads ? [...threads].reverse(): threads;
+  const filteredThreads = threads ? [...threads].reverse(): null;
 
   const displayThreads = filteredThreads?.map(threadObj => (
     <Flex 
-        key = {threadObj._id} 
+        key = {threadObj?._id} 
         justify={'space-between'}
         alignItems = {'center'}
         borderRadius = {'12px'}
@@ -53,13 +53,13 @@ const UserThreads = () => {
         onClick={() => openThread(threadObj)}
     >
       <Box>
-        <Text fontWeight={'600'} fontSize={'x-large'}>{threadObj.title}</Text>
-        <Text color = {'gray'}>{threadObj.description}...</Text>
+        <Text fontWeight={'600'} fontSize={'x-large'}>{threadObj?.title}</Text>
+        <Text color = {'gray'}>{threadObj?.description}...</Text>
       </Box>
       <Flex gap = {'1rem'}>
         <Box>
           <Text color = {'gray'}>Created by</Text>
-          <Text>{threadObj.creator_name} at {displayTime(threadObj.createdAt)}</Text>
+          <Text>{threadObj?.creator_name} at {displayTime(threadObj?.createdAt)}</Text>
         </Box>
         <Image w = {'50px'} src = {'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png'} alt = "User Image" />
       </Flex>

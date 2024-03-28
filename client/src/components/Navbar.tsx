@@ -15,6 +15,7 @@ import { getFromLocal } from "../utils/localStorage/getLocalValue"
 import { useUserInfo } from "../utils/hooks/user/useUserInfo"
 import axios from "axios"
 import UserModal from "./user/Modal"
+const backend_url = import.meta.env.VITE_BACKEND_URL
 
 
 
@@ -44,7 +45,7 @@ const Navbar = () => {
             }
         }
         try {
-            await axios.put('https://movie-hub-lqtp.onrender.com/user/disableNotification',{},options);
+            await axios.put(`${backend_url}/user/disableNotification`,{},options);
             navigate("/activities");
         } catch(err) {
             console.log(err);

@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { setWithExpiry } from "../../utils/localStorage/setLocalValue";
-
+const backend_url = import.meta.env.VITE_BACKEND_URL
 
 interface Props {
     formAction: string,
@@ -20,7 +20,7 @@ const Form = ({formAction,heading,text}: Props) => {
     const submit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`https://movie-hub-lqtp.onrender.com/user/${formAction}`,user);
+            const response = await axios.post(`${backend_url}/user/${formAction}`,user);
             const token = response.data.token;
             setWithExpiry("token",token);
             navigate('/');
@@ -55,7 +55,7 @@ const Form = ({formAction,heading,text}: Props) => {
             <FormLabel mt = {'1rem'} htmlFor="email">Email:</FormLabel>
             <Input type="text" id = "email" onChange={(e) => setUser(prev => ({...prev,email: e.target.value}))}/>
             <FormLabel mt = {'1rem'} htmlFor="password">Password:</FormLabel>
-            <Input type="text" id = "password" onChange={(e) => setUser(prev => ({...prev,password: e.target.value}))}/>
+            <Input type="password" id = "password" onChange={(e) => setUser(prev => ({...prev,password: e.target.value}))}/>
             <Button mt = {'3rem'} bg= {'transparent'} color = {'white'} border = {'2px solid white'} _hover={{color: "black",bg:"white"}}onClick = {(e) => submit(e)}>{heading === "LOGIN" ? "Login" : "Create Account"}</Button>
         </FormControl>
     )

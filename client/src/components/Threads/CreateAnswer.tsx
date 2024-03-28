@@ -14,6 +14,8 @@ import { AnswerValues } from "../../pages/threads/Thread";
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
 import {  useSetRecoilState } from "recoil";
 import { threadState } from "../../store/atoms/thread";
+const backend_url = import.meta.env.VITE_BACKEND_URL
+
 
 interface Props {
     answer: AnswerValues,
@@ -31,7 +33,7 @@ const CreateAnswer = ({isOpen,onClose,threadId,answer,setAnswer}:Props) => {
                 Authorization: "Bearer " + getFromLocal()
             }
         }
-        const response = await axios.post(`https://movie-hub-lqtp.onrender.com/user/addAnswer`,answer,options);
+        const response = await axios.post(`${backend_url}/user/addAnswer`,answer,options);
         setAnswer({thread_id: threadId,content: "",answer_id: null});
         setThread(response.data);
         onClose();
@@ -42,7 +44,7 @@ const CreateAnswer = ({isOpen,onClose,threadId,answer,setAnswer}:Props) => {
                 Authorization: "Bearer " + getFromLocal()
             }
         }
-        const response = await axios.post(`https://movie-hub-lqtp.onrender.com/user/addComment`,answer,options);
+        const response = await axios.post(`${backend_url}/user/addComment`,answer,options);
         setAnswer({thread_id: threadId,content: "",answer_id: null});
         setThread(response.data);
         onClose();

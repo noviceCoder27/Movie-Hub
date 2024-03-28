@@ -2,18 +2,18 @@ import axios from "axios";
 import { useQuery } from "react-query"
 import { Thread } from "../../../pages/threads/Thread";
 import { getFromLocal } from "../../localStorage/getLocalValue";
-
+const backend_url = import.meta.env.VITE_BACKEND_URL
 
 export const useUserThreads = () => {
     
     const getThreads = async () => {
-        const options = {
+    const options = {
             headers: {
                 "Authorization": "Bearer " + getFromLocal()
             }
         }
         try {
-            const response = await axios.get(`https://movie-hub-lqtp.onrender.com/getUserThreads`,options);
+            const response = await axios.get(`${backend_url}/threads/getUserThreads`,options);
             return response.data;
         } catch(err) {
             throw new Error((err as Error).message);

@@ -12,6 +12,8 @@ import { threadState } from "../../store/atoms/thread";
 import { getThreadId } from "../../store/selectors/threads";
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo";
 import { displayTime } from "../../utils/timestamp";
+const backend_url = import.meta.env.VITE_BACKEND_URL
+
 
 interface Props {
     id: string,
@@ -50,7 +52,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const likeAnswer = async () => {
         try {
-            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/likeAnswer',answer,options);
+            const response = await axios.put(`${backend_url}/user/likeAnswer`,answer,options);
             setThread(response.data);
         } catch(err) {
             console.log("Error upvoting",err);
@@ -59,7 +61,7 @@ const Answer = ({onOpen,content,likes,dislikes,userName,createdAt,setAnswer,answ
 
     const dislikeAnswer = async () => {
         try {
-            const response = await axios.put('https://movie-hub-lqtp.onrender.com/user/dislikeAnswer',answer,options);
+            const response = await axios.put(`${backend_url}/user/dislikeAnswer`,answer,options);
             setThread(response.data);
 
         } catch(err) {

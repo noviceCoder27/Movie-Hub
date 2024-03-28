@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query"
 import { getFromLocal } from "../localStorage/getLocalValue";
+const backend_url = import.meta.env.VITE_BACKEND_URL
 
 export interface Activity {
     _id: string,
@@ -19,7 +20,7 @@ export const useUserActivity = () => {
             }
         }
         try {
-            const response = await axios.get(`https://movie-hub-lqtp.onrender.com/activity/userActivities`,options);
+            const response = await axios.get(`${backend_url}/activity/userActivities`,options);
             return response.data;
         } catch(err) {
             throw new Error((err as Error).message);

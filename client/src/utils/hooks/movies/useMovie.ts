@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 interface Movie {
     adult: false,
     backdrop_path: string,

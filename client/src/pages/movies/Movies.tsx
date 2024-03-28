@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Image, Skeleton, SkeletonText, Text } from "@chakra-ui/react";
 import { useMovies } from "../../utils/hooks/movies/useMovies";
 import { Link } from "react-router-dom";
-import Background from '../../assets/background1.jpeg'
+import Background from '../../assets/bg.svg'
 import Pagination from "../../components/Pagination";
 import { useState } from "react";
 import SearchBox from "../../components/SearchBox";

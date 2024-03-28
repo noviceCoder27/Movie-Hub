@@ -4,6 +4,7 @@ import { Button, FormControl, FormLabel, Input, Modal, ModalContent, ModalFooter
 import { useParams } from "react-router-dom";
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
 import { Thread } from "../../pages/threads/Thread";
+const backend_url = import.meta.env.VITE_BACKEND_URL
 
 
 
@@ -28,7 +29,7 @@ const CreateThread = ({setThreads,setCreateThread,isOpen,onClose}: Props) => {
               Authorization: 'Bearer ' + getFromLocal(),
             },
         }  
-        const response = await axios.post('https://movie-hub-lqtp.onrender.com/user/addThread',thread,options);
+        const response = await axios.post(`${backend_url}/user/addThread`,thread,options);
         onClose();
         setThreads(prev => prev ? [...prev,response.data]: [response.data]);
     }

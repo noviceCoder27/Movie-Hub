@@ -14,6 +14,8 @@ import  {
 import { useRef, useState } from 'react';
 import { getFromLocal } from '../../utils/localStorage/getLocalValue';
 import axios from 'axios';
+const backend_url = import.meta.env.VITE_BACKEND_URL
+
 
 interface Props {
     openModal: boolean,
@@ -42,7 +44,7 @@ const UserModal = ({openModal,setOpenModal}: Props) => {
             }
         }
         try {
-            await axios.put('https://movie-hub-lqtp.onrender.com/user/updateUserCredentials',userDetails,options);
+            await axios.put(`${backend_url}/user/updateUserCredentials`,userDetails,options);
             setOpenModal(false);
         } catch(err) {
             console.log(err)

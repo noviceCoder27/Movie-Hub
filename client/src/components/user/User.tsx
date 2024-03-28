@@ -22,6 +22,8 @@ import { useEffect, useRef, useState } from 'react';
 import { getFromLocal } from "../../utils/localStorage/getLocalValue";
 import axios from "axios";
 import { useUserInfo } from "../../utils/hooks/user/useUserInfo";
+const backend_url = import.meta.env.VITE_BACKEND_URL
+
 
 const User = () => {
     const navigate = useNavigate();
@@ -59,7 +61,7 @@ const User = () => {
             }
         }
         try {
-            await axios.put('https://movie-hub-lqtp.onrender.com/user/updateUserCredentials',userDetails,options);
+            await axios.put(`${backend_url}/user/updateUserCredentials`,userDetails,options);
             onClose();
         } catch(err) {
             console.log(err)
@@ -73,7 +75,7 @@ const User = () => {
             }
         }
         try {
-            await axios.put('https://movie-hub-lqtp.onrender.com/user/disableNotification',{},options);
+            await axios.put(`${backend_url}/user/disableNotification`,{},options);
             navigate("/activities");
         } catch(err) {
             console.log(err);
