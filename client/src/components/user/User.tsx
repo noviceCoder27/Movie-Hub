@@ -87,7 +87,8 @@ const User = () => {
             <PopoverTrigger>
                 <Flex 
                 cursor = {'pointer'}
-                pos = {'absolute'} 
+                pos = {'absolute'}
+                maxW = {'80px'} 
                 display={{base: "none", lg: "flex"}} 
                 h= {'12vh'} 
                 minH = {'50px'} 

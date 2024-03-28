@@ -5,6 +5,7 @@ import Threads from './../models/threads';
 import  { IThreads } from "./../models/threads";
 import jwt, { Secret } from 'jsonwebtoken';
 import { createActivity } from "./activityControllers";
+import { Answer,Comment } from "./../models/threads";
 
 
 
@@ -75,7 +76,6 @@ export const getUserInfo = async(req: Request,res: Response) => {
 export const updateUserCredentials = async (req: Request, res: Response) => {
     const _id = getUserID(req);
     const { userName, email, profilePicture } = req.body;
-
     if (_id) {
         try {
             const user: IUser | null = await User.findOne({ _id });
@@ -175,9 +175,9 @@ export const addAnswer = async (req: Request,res: Response) => {
     const dislikes = 0
     let answer_id = 0;
     const _id = thread_id;
-    const user_id = getUserID(req);
-    const creatorExists: IUser| null = await User.findOne({_id:user_id}); 
     const thread: IThreads| null = await Threads.findOne({_id}); 
+    const user_id = getUserID(req) as string
+    const creatorExists: IUser| null = await User.findOne({_id:user_id}); 
     if(!thread) {
         res.status(400).json({msg: "Thread doesn't exist "});
     } else if(content && user_id) {
@@ -196,7 +196,7 @@ export const addAnswer = async (req: Request,res: Response) => {
             if(thread) {
                 const creator_id = thread.creator_id;
                 await User.findByIdAndUpdate(creator_id,{notify: true},{new:true});
-                const actvity = await createActivity(req,res,thread_id,answer_id, "Someone added an answer");
+                const actvity = await createActivity(req,res,thread_id,answer_id, "Someone added an answer",creator_id);
                 if(actvity) {
                     enableNotify(req,res,thread?.creator_id);
                     res.status(201).json(thread); 
@@ -215,11 +215,11 @@ export const addAnswer = async (req: Request,res: Response) => {
 export const addComment = async (req: Request,res: Response) => {
     const {thread_id,answer_id,content} = req.body;
     const likes = 0; 
-    const dislikes = 0
+    const dislikes = 0;
     let comment_id = 0;
     const _id = thread_id;
-    const user_id = getUserID(req);
     const thread: IThreads| null = await Threads.findOne({_id}); 
+    const user_id = getUserID(req) as string;
     if(!thread) {
         res.status(400).json({msg: "Thread doesn't exist "});
     } else if(content && user_id) {
@@ -240,7 +240,7 @@ export const addComment = async (req: Request,res: Response) => {
                 const thread = await Threads.findByIdAndUpdate(_id,{discussion_box: {answers}},{new: true});
                 const {user_id} = answer;
                 await User.findOneAndUpdate({_id: user_id},{notify: true});
-                const actvity = await createActivity(req,res,thread_id,answer_id,"You got a reply");
+                const actvity = await createActivity(req,res,thread_id,answer_id,"You got a reply",answer?.user_id);
                 if(actvity) {
                     enableNotify(req,res,thread?.creator_id);
                     res.status(201).json(thread); 
@@ -269,20 +269,20 @@ export const likeAnswer = async(req:Request,res:Response) => {
         if(thread) {
             const {discussion_box} = thread;
             const {answers} = discussion_box;
-            const answer = answers.find(answer => answer.answer_id === Number(answer_id));
+            const answer: Answer | undefined = answers.find(answer => answer.answer_id === Number(answer_id));
             answers[answer_id].likes++;
             try {
                 const thread = await Threads.findByIdAndUpdate(_id,{discussion_box: {answers}},{new: true});
                 if(answer) {
                     const {user_id} = answer;
                     await User.findOneAndUpdate({_id: user_id},{notify: true});
-                }
-                const actvity = await createActivity(req,res,thread_id,answer_id,"Your answer got a like");
-                if(actvity) {
-                    enableNotify(req,res,thread?.creator_id);
-                    res.status(201).json(thread); 
-                } else {
-                    res.status(400).json({msg: "Error in notifications"});
+                    const activity = await createActivity(req,res,thread_id,answer_id,"Your answer got a like",answer?.user_id);
+                    if(activity) {
+                        enableNotify(req,res,activity?.user_id);
+                        res.status(201).json(thread); 
+                    } else {
+                        res.status(400).json({msg: "Error in notifications"});
+                    }
                 }
             } catch(err) {
                 res.status(400).json({msg: "Error updating thread "});
@@ -304,20 +304,20 @@ export const dislikeAnswer = async(req:Request,res:Response) => {
         if(thread) {
             const {discussion_box} = thread;
             const {answers} = discussion_box;
-            const answer = answers.find(answer => answer.answer_id === Number(answer_id));
+            const answer: Answer | undefined = answers.find(answer => answer.answer_id === Number(answer_id));
             answers[answer_id].likes--;
             try {
                 const thread = await Threads.findByIdAndUpdate(_id,{discussion_box: {answers}},{new: true});
                 if(answer) {
                     const {user_id} = answer;
                     await User.findOneAndUpdate({_id: user_id},{notify: true});
-                }
-                const actvity = await createActivity(req,res,thread_id,answer_id,"Your answer got a dislike");
-                if(actvity) {
-                    enableNotify(req,res,thread?.creator_id);
-                    res.status(201).json(thread); 
-                } else {
-                    res.status(400).json({msg: "Error in notifications"});
+                    const activity = await createActivity(req,res,thread_id,answer_id,"Your answer got a dislike",answer?.user_id);
+                    if(activity) {
+                        enableNotify(req,res,activity?.user_id);
+                        res.status(201).json(thread); 
+                    } else {
+                        res.status(400).json({msg: "Error in notifications"});
+                    }
                 }
             } catch(err) {
                 res.status(400).json({msg: "Error updating thread "});
@@ -340,20 +340,20 @@ export const likeComment = async(req:Request,res:Response) => {
             const {discussion_box} = thread;
             const {answers} = discussion_box;
             const {comments} = answers[answer_id];
-            const comment = comments.find(comment => comment.comment_id === Number(comment_id));
+            const comment: Comment | undefined = comments.find(comment => comment.comment_id === Number(comment_id));
             comments[comment_id].likes++;
             try {
                 const thread = await Threads.findByIdAndUpdate(_id,{discussion_box: {answers}},{new: true});
                 if(comment) {
                     const {user_id} = comment;
                     await User.findOneAndUpdate({_id: user_id},{notify: true});
-                }
-                const actvity = await createActivity(req,res,thread_id,answer_id,"Your comment got a like");
-                if(actvity) {
-                    enableNotify(req,res,thread?.creator_id);
-                    res.status(201).json(thread); 
-                } else {
-                    res.status(400).json({msg: "Error in notifications"});
+                    const activity = await createActivity(req,res,thread_id,answer_id,"Your comment got a like", comment?.user_id);
+                    if(activity) {
+                        enableNotify(req,res,activity?.user_id);
+                        res.status(201).json(thread); 
+                    } else {
+                        res.status(400).json({msg: "Error in notifications"});
+                    }
                 }
             } catch(err) {
                 res.status(400).json({msg: "Error updating thread "});
@@ -375,21 +375,22 @@ export const dislikeComment = async(req:Request,res:Response) => {
             const {discussion_box} = thread;
             const {answers} = discussion_box;
             const {comments} = answers[answer_id];
-            const comment = comments.find(comment => comment.comment_id === Number(comment_id));
+            const comment: Comment | undefined = comments.find(comment => comment.comment_id === Number(comment_id));
             comments[comment_id].likes--;
             try {
                 const thread = await Threads.findByIdAndUpdate(_id,{discussion_box: {answers}},{new: true});
                 if(comment) {
                     const {user_id} = comment;
                     await User.findOneAndUpdate({_id: user_id},{notify: true});
+                    const activity = await createActivity(req,res,thread_id,answer_id,"Your comment got a dislike", comment?.user_id);
+                    if(activity) {
+                        enableNotify(req,res,activity?.user_id);
+                        res.status(201).json(thread); 
+                    } else {
+                        res.status(400).json({msg: "Error in notifications"});
+                    }
                 }
-                const actvity = await createActivity(req,res,thread_id,answer_id,"Your comment got a dislike");
-                if(actvity) {
-                    enableNotify(req,res,thread?.creator_id);
-                    res.status(201).json(thread); 
-                } else {
-                    res.status(400).json({msg: "Error in notifications"});
-                }
+                
             } catch(err) {
                 res.status(400).json({msg: "Error updating thread "});
             }

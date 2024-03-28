@@ -3,7 +3,7 @@ import mongoose, {Document} from 'mongoose'
 const Schema = mongoose.Schema
 
 
-interface Comment {
+export interface Comment {
     content: string,
     comment_id: number,
     likes: number,
@@ -13,7 +13,7 @@ interface Comment {
     createdAt: Date,
 }
 
-interface Answer {
+export interface Answer {
     content: string,
     comments: Comment[]
     likes: number,

@@ -19,8 +19,7 @@ export const getUserActivities = async(req: Request,res:Response) => {
     }
 }
 
-export const createActivity = async(req: Request,res: Response,thread_id:string,answer_id: number, content: string) => {
-    const _id = getUserID(req);
+export const createActivity = async(req: Request,res: Response,thread_id:string,answer_id: number, content: string,_id: string) => {
     const thread = await Threads.findOne({_id: thread_id});
     if(thread_id && (answer_id !== undefined || null) && _id && thread) {
         const {movie_id} = thread;
@@ -39,7 +38,7 @@ export const createActivity = async(req: Request,res: Response,thread_id:string,
                 }
                 try {
                     await User.findByIdAndUpdate(_id, {activities: updatedActivities},{new: true});
-                    return true;
+                    return activity;
                 } catch(err) {
                     return false;
                 }
