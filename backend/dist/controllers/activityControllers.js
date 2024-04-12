@@ -33,8 +33,7 @@ const getUserActivities = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getUserActivities = getUserActivities;
-const createActivity = (req, res, thread_id, answer_id, content) => __awaiter(void 0, void 0, void 0, function* () {
-    const _id = (0, userControllers_1.getUserID)(req);
+const createActivity = (req, res, thread_id, answer_id, content, _id) => __awaiter(void 0, void 0, void 0, function* () {
     const thread = yield threads_1.default.findOne({ _id: thread_id });
     if (thread_id && (answer_id !== undefined || null) && _id && thread) {
         const { movie_id } = thread;
@@ -54,7 +53,7 @@ const createActivity = (req, res, thread_id, answer_id, content) => __awaiter(vo
                 }
                 try {
                     yield user_1.default.findByIdAndUpdate(_id, { activities: updatedActivities }, { new: true });
-                    return true;
+                    return activity;
                 }
                 catch (err) {
                     return false;

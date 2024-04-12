@@ -201,9 +201,9 @@ const addAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const dislikes = 0;
     let answer_id = 0;
     const _id = thread_id;
+    const thread = yield threads_1.default.findOne({ _id });
     const user_id = (0, exports.getUserID)(req);
     const creatorExists = yield user_1.default.findOne({ _id: user_id });
-    const thread = yield threads_1.default.findOne({ _id });
     if (!thread) {
         res.status(400).json({ msg: "Thread doesn't exist " });
     }
@@ -223,7 +223,7 @@ const addAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (thread) {
                 const creator_id = thread.creator_id;
                 yield user_1.default.findByIdAndUpdate(creator_id, { notify: true }, { new: true });
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Someone added an answer");
+                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Someone added an answer", creator_id);
                 if (actvity) {
                     enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
                     res.status(201).json(thread);
@@ -248,8 +248,8 @@ const addComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const dislikes = 0;
     let comment_id = 0;
     const _id = thread_id;
-    const user_id = (0, exports.getUserID)(req);
     const thread = yield threads_1.default.findOne({ _id });
+    const user_id = (0, exports.getUserID)(req);
     if (!thread) {
         res.status(400).json({ msg: "Thread doesn't exist " });
     }
@@ -271,7 +271,7 @@ const addComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 const thread = yield threads_1.default.findByIdAndUpdate(_id, { discussion_box: { answers } }, { new: true });
                 const { user_id } = answer;
                 yield user_1.default.findOneAndUpdate({ _id: user_id }, { notify: true });
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "You got a reply");
+                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "You got a reply", answer === null || answer === void 0 ? void 0 : answer.user_id);
                 if (actvity) {
                     enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
                     res.status(201).json(thread);
@@ -311,14 +311,14 @@ const likeAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 if (answer) {
                     const { user_id } = answer;
                     yield user_1.default.findOneAndUpdate({ _id: user_id }, { notify: true });
-                }
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your answer got a like");
-                if (actvity) {
-                    enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
-                    res.status(201).json(thread);
-                }
-                else {
-                    res.status(400).json({ msg: "Error in notifications" });
+                    const activity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your answer got a like", answer === null || answer === void 0 ? void 0 : answer.user_id);
+                    if (activity) {
+                        enableNotify(req, res, activity === null || activity === void 0 ? void 0 : activity.user_id);
+                        res.status(201).json(thread);
+                    }
+                    else {
+                        res.status(400).json({ msg: "Error in notifications" });
+                    }
                 }
             }
             catch (err) {
@@ -349,14 +349,14 @@ const dislikeAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 if (answer) {
                     const { user_id } = answer;
                     yield user_1.default.findOneAndUpdate({ _id: user_id }, { notify: true });
-                }
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your answer got a dislike");
-                if (actvity) {
-                    enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
-                    res.status(201).json(thread);
-                }
-                else {
-                    res.status(400).json({ msg: "Error in notifications" });
+                    const activity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your answer got a dislike", answer === null || answer === void 0 ? void 0 : answer.user_id);
+                    if (activity) {
+                        enableNotify(req, res, activity === null || activity === void 0 ? void 0 : activity.user_id);
+                        res.status(201).json(thread);
+                    }
+                    else {
+                        res.status(400).json({ msg: "Error in notifications" });
+                    }
                 }
             }
             catch (err) {
@@ -388,14 +388,14 @@ const likeComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 if (comment) {
                     const { user_id } = comment;
                     yield user_1.default.findOneAndUpdate({ _id: user_id }, { notify: true });
-                }
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your comment got a like");
-                if (actvity) {
-                    enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
-                    res.status(201).json(thread);
-                }
-                else {
-                    res.status(400).json({ msg: "Error in notifications" });
+                    const activity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your comment got a like", comment === null || comment === void 0 ? void 0 : comment.user_id);
+                    if (activity) {
+                        enableNotify(req, res, activity === null || activity === void 0 ? void 0 : activity.user_id);
+                        res.status(201).json(thread);
+                    }
+                    else {
+                        res.status(400).json({ msg: "Error in notifications" });
+                    }
                 }
             }
             catch (err) {
@@ -427,14 +427,14 @@ const dislikeComment = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 if (comment) {
                     const { user_id } = comment;
                     yield user_1.default.findOneAndUpdate({ _id: user_id }, { notify: true });
-                }
-                const actvity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your comment got a dislike");
-                if (actvity) {
-                    enableNotify(req, res, thread === null || thread === void 0 ? void 0 : thread.creator_id);
-                    res.status(201).json(thread);
-                }
-                else {
-                    res.status(400).json({ msg: "Error in notifications" });
+                    const activity = yield (0, activityControllers_1.createActivity)(req, res, thread_id, answer_id, "Your comment got a dislike", comment === null || comment === void 0 ? void 0 : comment.user_id);
+                    if (activity) {
+                        enableNotify(req, res, activity === null || activity === void 0 ? void 0 : activity.user_id);
+                        res.status(201).json(thread);
+                    }
+                    else {
+                        res.status(400).json({ msg: "Error in notifications" });
+                    }
                 }
             }
             catch (err) {

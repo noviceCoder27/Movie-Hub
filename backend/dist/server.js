@@ -15,7 +15,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: "https://movie-hub27.netlify.app",
-    methods: ["GET","PATCH","POST", "DELETE", "PUT"],
+    methods: ["GET", "PATCH", "POST", "DELETE", "PUT"],
     credentials: true
 }));
 app.use(body_parser_1.default.json());
