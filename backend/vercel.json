@@ -6,7 +6,7 @@
     "routes": [
         {
           "src": "/(.*)",
-          "dest": "/",
+          "dest": "/dist",
           "methods":["GET","PATCH","POST", "DELETE", "PUT"],
           "headers": {
             "Access-Control-Allow-Origin": "*"
